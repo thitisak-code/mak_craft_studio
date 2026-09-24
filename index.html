@@ -1,0 +1,803 @@
+<!DOCTYPE html>
+<html lang="th" class="scroll-smooth" data-theme="cyan" data-mode="dark">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Mak Craft Studio | Enterprise Systems & AI Architecture</title>
+    <meta name="description" content="ผู้เชี่ยวชาญการออกแบบและพัฒนาซอฟต์แวร์ระดับองค์กร ระบบจัดการภายใน เว็บแอปพลิเคชัน และการประยุกต์ใช้ AI เพื่อยกระดับธุรกิจ">
+    
+    <!-- Tailwind CSS CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Google Fonts: Inter & Prompt -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=Prompt:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    
+    <script>
+        tailwind.config = {
+            darkMode: 'class',
+            theme: {
+                extend: {
+                    fontFamily: {
+                        sans: ['Prompt', 'Inter', 'sans-serif'],
+                        heading: ['Inter', 'Prompt', 'sans-serif'],
+                    },
+                    colors: {
+                        brand: {
+                            50: 'var(--brand-50)',
+                            100: 'var(--brand-100)',
+                            200: 'var(--brand-200)',
+                            300: 'var(--brand-300)',
+                            400: 'var(--brand-400)',
+                            500: 'var(--brand-500)',
+                            600: 'var(--brand-600)',
+                            700: 'var(--brand-700)',
+                        },
+                        appBg: 'var(--app-bg)',
+                        cardBg: 'var(--card-bg)',
+                        cardBgHover: 'var(--card-bg-hover)',
+                        borderSubtle: 'var(--border-subtle)',
+                        textPrimary: 'var(--text-primary)',
+                        textSecondary: 'var(--text-secondary)',
+                    }
+                }
+            }
+        }
+    </script>
+    
+    <style>
+        /* CSS Theme Variables System */
+        :root[data-theme="cyan"][data-mode="dark"] {
+            --brand-50: #ecfeff;
+            --brand-100: #cffafe;
+            --brand-200: #a5f3fc;
+            --brand-300: #67e8f9;
+            --brand-400: #22d3ee;
+            --brand-500: #00d2ff;
+            --brand-600: #0072ff;
+            --brand-700: #0369a1;
+            --app-bg: #07090e;
+            --card-bg: #0d131f;
+            --card-bg-hover: #121a2b;
+            --border-subtle: #172236;
+            --text-primary: #f8fafc;
+            --text-secondary: #94a3b8;
+            --glow-color-1: rgba(0, 210, 255, 0.16);
+            --glow-color-2: rgba(0, 114, 255, 0.08);
+            --card-glow-shadow: 0 0 35px -5px rgba(0, 210, 255, 0.18);
+        }
+
+        :root[data-theme="cyan"][data-mode="light"] {
+            --brand-50: #ecfeff;
+            --brand-100: #cffafe;
+            --brand-200: #a5f3fc;
+            --brand-300: #67e8f9;
+            --brand-400: #06b6d4;
+            --brand-500: #0284c7;
+            --brand-600: #0369a1;
+            --brand-700: #075985;
+            --app-bg: #f8fafc;
+            --card-bg: #ffffff;
+            --card-bg-hover: #f1f5f9;
+            --border-subtle: #e2e8f0;
+            --text-primary: #0f172a;
+            --text-secondary: #475569;
+            --glow-color-1: rgba(2, 132, 199, 0.12);
+            --glow-color-2: rgba(6, 182, 212, 0.06);
+            --card-glow-shadow: 0 10px 25px -5px rgba(2, 132, 199, 0.12);
+        }
+
+        :root[data-theme="emerald"][data-mode="dark"] {
+            --brand-50: #ecfdf5;
+            --brand-100: #d1fae5;
+            --brand-200: #a7f3d0;
+            --brand-300: #6ee7b7;
+            --brand-400: #34d399;
+            --brand-500: #10b981;
+            --brand-600: #059669;
+            --brand-700: #047857;
+            --app-bg: #060e0a;
+            --card-bg: #0b1812;
+            --card-bg-hover: #10241b;
+            --border-subtle: #163326;
+            --text-primary: #f8fafc;
+            --text-secondary: #94a3b8;
+            --glow-color-1: rgba(16, 185, 129, 0.16);
+            --glow-color-2: rgba(5, 150, 105, 0.08);
+            --card-glow-shadow: 0 0 35px -5px rgba(16, 185, 129, 0.18);
+        }
+
+        :root[data-theme="emerald"][data-mode="light"] {
+            --brand-50: #ecfdf5;
+            --brand-100: #d1fae5;
+            --brand-200: #a7f3d0;
+            --brand-300: #6ee7b7;
+            --brand-400: #34d399;
+            --brand-500: #059669;
+            --brand-600: #047857;
+            --brand-700: #065f46;
+            --app-bg: #f8fafc;
+            --card-bg: #ffffff;
+            --card-bg-hover: #f1f5f9;
+            --border-subtle: #e2e8f0;
+            --text-primary: #0f172a;
+            --text-secondary: #475569;
+            --glow-color-1: rgba(5, 150, 105, 0.12);
+            --glow-color-2: rgba(16, 185, 129, 0.06);
+            --card-glow-shadow: 0 10px 25px -5px rgba(5, 150, 105, 0.12);
+        }
+
+        :root[data-theme="purple"][data-mode="dark"] {
+            --brand-50: #faf5ff;
+            --brand-100: #f3e8ff;
+            --brand-200: #e9d5ff;
+            --brand-300: #d8b4fe;
+            --brand-400: #c084fc;
+            --brand-500: #a855f7;
+            --brand-600: #9333ea;
+            --brand-700: #7e22ce;
+            --app-bg: #090611;
+            --card-bg: #120e20;
+            --card-bg-hover: #1b1430;
+            --border-subtle: #241a40;
+            --text-primary: #f8fafc;
+            --text-secondary: #94a3b8;
+            --glow-color-1: rgba(168, 85, 247, 0.18);
+            --glow-color-2: rgba(147, 51, 234, 0.08);
+            --card-glow-shadow: 0 0 35px -5px rgba(168, 85, 247, 0.2);
+        }
+
+        :root[data-theme="purple"][data-mode="light"] {
+            --brand-50: #faf5ff;
+            --brand-100: #f3e8ff;
+            --brand-200: #e9d5ff;
+            --brand-300: #d8b4fe;
+            --brand-400: #c084fc;
+            --brand-500: #9333ea;
+            --brand-600: #7e22ce;
+            --brand-700: #6b21a8;
+            --app-bg: #fdfcff;
+            --card-bg: #ffffff;
+            --card-bg-hover: #f5f3ff;
+            --border-subtle: #e9d5ff;
+            --text-primary: #0f172a;
+            --text-secondary: #475569;
+            --glow-color-1: rgba(147, 51, 234, 0.12);
+            --glow-color-2: rgba(168, 85, 247, 0.06);
+            --card-glow-shadow: 0 10px 25px -5px rgba(147, 51, 234, 0.12);
+        }
+
+        :root[data-theme="amber"][data-mode="dark"] {
+            --brand-50: #fffbeb;
+            --brand-100: #fef3c7;
+            --brand-200: #fde68a;
+            --brand-300: #fcd34d;
+            --brand-400: #fbbf24;
+            --brand-500: #f59e0b;
+            --brand-600: #d97706;
+            --brand-700: #b45309;
+            --app-bg: #0c0904;
+            --card-bg: #17130a;
+            --card-bg-hover: #221d10;
+            --border-subtle: #332712;
+            --text-primary: #f8fafc;
+            --text-secondary: #94a3b8;
+            --glow-color-1: rgba(245, 158, 11, 0.16);
+            --glow-color-2: rgba(217, 119, 6, 0.08);
+            --card-glow-shadow: 0 0 35px -5px rgba(245, 158, 11, 0.18);
+        }
+
+        :root[data-theme="amber"][data-mode="light"] {
+            --brand-50: #fffbeb;
+            --brand-100: #fef3c7;
+            --brand-200: #fde68a;
+            --brand-300: #fcd34d;
+            --brand-400: #fbbf24;
+            --brand-500: #d97706;
+            --brand-600: #b45309;
+            --brand-700: #92400e;
+            --app-bg: #fffdfa;
+            --card-bg: #ffffff;
+            --card-bg-hover: #fefce8;
+            --border-subtle: #fde68a;
+            --text-primary: #0f172a;
+            --text-secondary: #475569;
+            --glow-color-1: rgba(217, 119, 6, 0.12);
+            --glow-color-2: rgba(245, 158, 11, 0.06);
+            --card-glow-shadow: 0 10px 25px -5px rgba(217, 119, 6, 0.12);
+        }
+
+        body {
+            background-color: var(--app-bg);
+            color: var(--text-primary);
+            transition: background-color 0.3s ease, color 0.3s ease;
+        }
+
+        .glow-hero {
+            background: radial-gradient(circle at 50% -10%, var(--glow-color-1) 0%, var(--glow-color-2) 45%, transparent 75%);
+        }
+
+        .card-custom-glow:hover {
+            box-shadow: var(--card-glow-shadow);
+        }
+
+        .gradient-brand-text {
+            background: linear-gradient(135deg, var(--brand-400) 0%, var(--brand-500) 50%, var(--brand-600) 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .gradient-btn-brand {
+            background: linear-gradient(135deg, var(--brand-500) 0%, var(--brand-600) 100%);
+            color: #ffffff;
+        }
+        .gradient-btn-brand:hover {
+            background: linear-gradient(135deg, var(--brand-400) 0%, var(--brand-500) 100%);
+        }
+    </style>
+</head>
+<body class="min-h-screen selection:bg-brand-500 selection:text-white flex flex-col justify-between">
+
+    <!-- Top Floating Theme Customizer & Quick Switcher -->
+    <div class="fixed bottom-6 right-6 z-50 flex items-center gap-2 p-2 rounded-2xl bg-cardBg/90 backdrop-blur-xl border border-borderSubtle shadow-2xl">
+        <div class="flex items-center gap-1.5 px-2 border-r border-borderSubtle">
+            <span class="text-xs font-semibold text-textSecondary hidden sm:inline">ธีมสี:</span>
+            <!-- Color Palettes -->
+            <button onclick="setTheme('cyan')" title="Cyber Cyan (Original Logo)" class="w-6 h-6 rounded-full bg-cyan-400 border-2 border-slate-700 hover:scale-110 transition-transform focus:ring-2 focus:ring-cyan-400"></button>
+            <button onclick="setTheme('emerald')" title="Emerald Matrix" class="w-6 h-6 rounded-full bg-emerald-500 border-2 border-slate-700 hover:scale-110 transition-transform focus:ring-2 focus:ring-emerald-400"></button>
+            <button onclick="setTheme('purple')" title="Royal Purple" class="w-6 h-6 rounded-full bg-purple-500 border-2 border-slate-700 hover:scale-110 transition-transform focus:ring-2 focus:ring-purple-400"></button>
+            <button onclick="setTheme('amber')" title="Amber Gold" class="w-6 h-6 rounded-full bg-amber-500 border-2 border-slate-700 hover:scale-110 transition-transform focus:ring-2 focus:ring-amber-400"></button>
+        </div>
+        <!-- Light / Dark Mode Toggle -->
+        <button onclick="toggleMode()" id="modeToggleBtn" title="สลับโหมดสว่าง / มืด" class="p-2 rounded-xl text-textSecondary hover:text-textPrimary hover:bg-cardBgHover transition-colors flex items-center justify-center">
+            <svg id="moonIcon" class="w-5 h-5 hidden" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M20.354 15.354A9 9 0 018.646 3.646 9.003 9.003 0 0012 21a9.003 9.003 0 008.354-5.646z"></path></svg>
+            <svg id="sunIcon" class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 3v1m0 16v1m9-9h-1M4 12H3m15.364 6.364l-.707-.707M6.343 6.343l-.707-.707m12.728 0l-.707.707M6.343 17.657l-.707.707M16 12a4 4 0 11-8 0 4 4 0 018 0z"></path></svg>
+        </button>
+    </div>
+
+    <!-- Navigation Bar -->
+    <nav class="sticky top-0 z-40 backdrop-blur-xl bg-appBg/85 border-b border-borderSubtle transition-colors">
+        <div class="max-w-7xl mx-auto px-6 h-20 flex items-center justify-between">
+            <!-- Brand Logo -->
+            <a href="#" class="flex items-center gap-3.5 group">
+                <div class="w-11 h-11 rounded-xl bg-gradient-to-tr from-brand-500/20 via-brand-600/30 to-slate-900 border border-brand-500/30 flex items-center justify-center p-1.5 shadow-lg shadow-brand-500/10 group-hover:border-brand-400 group-hover:scale-105 transition-all">
+                    <img src="img/logo3.png" alt="Mak Craft Studio Logo" class="h-full w-full object-contain">
+                </div>
+                <div class="flex flex-col">
+                    <span class="font-extrabold text-lg tracking-tight text-textPrimary group-hover:text-brand-400 transition-colors">Mak Craft Studio</span>
+                    <span class="text-[11px] text-brand-500 font-semibold tracking-wider uppercase">Systems & AI Architecture</span>
+                </div>
+            </a>
+
+            <!-- Navigation Links -->
+            <div class="hidden md:flex items-center gap-8 text-sm font-medium text-textSecondary">
+                <a href="#about" class="hover:text-brand-500 transition-colors">เกี่ยวกับเรา</a>
+                <a href="#services" class="hover:text-brand-500 transition-colors">บริการของเรา</a>
+                <a href="#portfolio" class="hover:text-brand-500 transition-colors">ผลงานจริง</a>
+                <a href="#tech" class="hover:text-brand-500 transition-colors">เทคโนโลยี</a>
+                <a href="#faq" class="hover:text-brand-500 transition-colors">คำถามที่พบบ่อย</a>
+            </div>
+
+            <!-- CTA Button & Mobile Toggle -->
+            <div class="flex items-center gap-3">
+                <a href="#contact" class="hidden sm:inline-flex items-center justify-center px-5 py-2.5 rounded-xl gradient-btn-brand font-semibold text-sm transition-all shadow-lg shadow-brand-500/20 border border-brand-400/30">
+                    ปรึกษาโปรเจกต์ฟรี
+                </a>
+                <button onclick="toggleMobileMenu()" class="md:hidden p-2 rounded-lg border border-borderSubtle text-textSecondary hover:text-textPrimary" aria-label="Toggle Menu">
+                    <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16m-7 6h7"></path></svg>
+                </button>
+            </div>
+        </div>
+
+        <!-- Mobile Nav Menu -->
+        <div id="mobileMenu" class="hidden md:hidden px-6 py-4 border-b border-borderSubtle bg-cardBg text-sm font-medium space-y-3">
+            <a href="#about" onclick="toggleMobileMenu()" class="block text-textSecondary hover:text-brand-500">เกี่ยวกับเรา</a>
+            <a href="#services" onclick="toggleMobileMenu()" class="block text-textSecondary hover:text-brand-500">บริการของเรา</a>
+            <a href="#portfolio" onclick="toggleMobileMenu()" class="block text-textSecondary hover:text-brand-500">ผลงานจริง</a>
+            <a href="#tech" onclick="toggleMobileMenu()" class="block text-textSecondary hover:text-brand-500">เทคโนโลยี</a>
+            <a href="#faq" onclick="toggleMobileMenu()" class="block text-textSecondary hover:text-brand-500">คำถามที่พบบ่อย</a>
+            <a href="#contact" onclick="toggleMobileMenu()" class="block w-full text-center py-2.5 rounded-xl gradient-btn-brand font-semibold">ปรึกษาโปรเจกต์ฟรี</a>
+        </div>
+    </nav>
+
+    <main>
+        <!-- Hero Section -->
+        <header class="relative overflow-hidden pt-16 pb-24 glow-hero border-b border-borderSubtle">
+            <div class="max-w-6xl mx-auto px-6 text-center">
+                <!-- Center Hero Logo -->
+                <div class="flex justify-center mb-8">
+                    <div class="relative group">
+                        <div class="absolute -inset-1.5 bg-gradient-to-r from-brand-500 via-brand-600 to-indigo-500 rounded-3xl blur-xl opacity-50 group-hover:opacity-80 transition duration-500"></div>
+                        <div class="relative w-32 h-32 sm:w-44 sm:h-44 rounded-2xl bg-cardBg p-3 border border-brand-500/40 shadow-2xl flex items-center justify-center overflow-hidden">
+                            <img src="img/logo2.png" alt="Mak Craft Studio Logo" class="w-full h-full object-contain rounded-xl transform group-hover:scale-105 transition-transform duration-300">
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Trust Badge -->
+                <div class="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-brand-500/10 border border-brand-500/30 text-brand-500 text-xs font-semibold mb-6 uppercase tracking-widest shadow-inner">
+                    <span class="w-2 h-2 rounded-full bg-brand-400 animate-pulse shadow-lg shadow-brand-400"></span>
+                    Enterprise Software Architecture & AI Engineering
+                </div>
+
+                <!-- Main Headline -->
+                <h1 class="text-4xl sm:text-6xl lg:text-7xl font-extrabold tracking-tight text-textPrimary mb-6 leading-[1.15]">
+                    พัฒนาระบบบริหารจัดการองค์กร <br class="hidden sm:inline">
+                    <span class="gradient-brand-text">ผสานพลัง AI อัจฉริยะ</span>
+                </h1>
+
+                <!-- Subheadline -->
+                <p class="text-lg sm:text-xl text-textSecondary max-w-3xl mx-auto mb-10 font-normal leading-relaxed">
+                    เราเชี่ยวชาญการออกแบบสถาปัตยกรรมซอฟต์แวร์ระดับ Enterprise ระบบจัดการภายใน (ERP/CRM/Asset) เว็บแอปพลิเคชัน และโซลูชัน AI เฉพาะทางเพื่อเพิ่มประสิทธิภาพการทำงานและลดต้นทุนธุรกิจอย่างยั่งยืน
+                </p>
+
+                <!-- Hero Action Buttons -->
+                <div class="flex flex-col sm:flex-row items-center justify-center gap-4">
+                    <a href="#contact" class="w-full sm:w-auto px-8 py-4 rounded-xl gradient-btn-brand font-semibold transition-all shadow-xl shadow-brand-500/25 border border-brand-400/30 text-center flex items-center justify-center gap-2">
+                        <span>เริ่มต้นสร้างระบบของคุณ</span>
+                        <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14 5l7 7m0 0l-7 7m7-7H3"></path></svg>
+                    </a>
+                    <a href="#portfolio" class="w-full sm:w-auto px-8 py-4 rounded-xl bg-cardBg hover:bg-cardBgHover border border-borderSubtle hover:border-brand-500/40 text-textPrimary font-semibold transition-all text-center">
+                        ชมผลงานที่พัฒนาแล้ว
+                    </a>
+                </div>
+            </div>
+        </header>
+
+        <!-- About Section (ทำความรู้จัก Mak Craft Studio) -->
+        <section id="about" class="py-24 max-w-7xl mx-auto px-6">
+            <div class="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
+                <div>
+                    <div class="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-brand-500/10 text-brand-500 text-xs font-semibold uppercase tracking-wider mb-4">
+                        About Mak Craft Studio
+                    </div>
+                    <h2 class="text-3xl sm:text-4xl font-bold tracking-tight text-textPrimary mb-6 leading-tight">
+                        ทีมวิศวกรซอฟต์แวร์ที่มุ่งเน้น <br><span class="gradient-brand-text">คุณภาพ เสถียรภาพ และความปลอดภัยสูงสุด</span>
+                    </h2>
+                    <p class="text-textSecondary text-base leading-relaxed mb-6">
+                        <strong>Mak Craft Studio</strong> เกิดจากการรวมตัวของผู้เชี่ยวชาญด้าน Software Architecture, Database Design และ AI Integration เราไม่เพียงแต่เขียนโค้ดตามบรีฟ แต่เราวิเคราะห์กระบวนการทางธุรกิจ (Business Workflow Analysis) เพื่อสร้างระบบที่แก้ปัญหาได้อย่างตรงจุด ใช้งานง่าย และขยายต่อได้ในอนาคต
+                    </p>
+                    <div class="space-y-3">
+                        <div class="flex items-start gap-3">
+                            <div class="w-6 h-6 rounded-full bg-brand-500/20 text-brand-500 flex items-center justify-center shrink-0 mt-0.5">
+                                <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path></svg>
+                            </div>
+                            <span class="text-sm text-textSecondary"><strong class="text-textPrimary">Custom Enterprise Fit:</strong> ระบบปรับแต่งตามโครงสร้างจริงขององค์กรคุณ 100% ไม่ติดข้อจำกัดแบบโปรแกรมสำเร็จรูป</span>
+                        </div>
+                        <div class="flex items-start gap-3">
+                            <div class="w-6 h-6 rounded-full bg-brand-500/20 text-brand-500 flex items-center justify-center shrink-0 mt-0.5">
+                                <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path></svg>
+                            </div>
+                            <span class="text-sm text-textSecondary"><strong class="text-textPrimary">Enterprise Security Standards:</strong> ป้องกัน SQL Injection, XSS, CSRF และระบบจัดการสิทธิ์ผู้ใช้หลายระดับ (Role-Based Access Control)</span>
+                        </div>
+                        <div class="flex items-start gap-3">
+                            <div class="w-6 h-6 rounded-full bg-brand-500/20 text-brand-500 flex items-center justify-center shrink-0 mt-0.5">
+                                <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path></svg>
+                            </div>
+                            <span class="text-sm text-textSecondary"><strong class="text-textPrimary">AI-Driven Efficiency:</strong> ประยุกต์ใช้โมเดลภาษาและการวิเคราะห์ข้อมูลขั้นสูงเพื่อช่วยผู้บริหารตัดสินใจ</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="grid grid-cols-2 gap-4">
+                    <div class="p-6 rounded-2xl bg-cardBg border border-borderSubtle card-custom-glow transition-all">
+                        <div class="w-10 h-10 rounded-xl bg-brand-500/10 border border-brand-500/20 flex items-center justify-center text-brand-500 mb-4">
+                            <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z"></path></svg>
+                        </div>
+                        <h3 class="text-lg font-bold text-textPrimary mb-2">Security First</h3>
+                        <p class="text-xs text-textSecondary leading-relaxed">สถาปัตยกรรมปลอดภัย มาตรฐานการเข้ารหัสข้อมูล และการตรวจช่องโหว่ก่อนขึ้นระบบจริง</p>
+                    </div>
+
+                    <div class="p-6 rounded-2xl bg-cardBg border border-borderSubtle card-custom-glow transition-all">
+                        <div class="w-10 h-10 rounded-xl bg-brand-500/10 border border-brand-500/20 flex items-center justify-center text-brand-500 mb-4">
+                            <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z"></path></svg>
+                        </div>
+                        <h3 class="text-lg font-bold text-textPrimary mb-2">High Performance</h3>
+                        <p class="text-xs text-textSecondary leading-relaxed">โหลดรวดเร็ว รองรับ Concurrent Users สูง ปรับจูนฐานข้อมูลแบบมืออาชีพ</p>
+                    </div>
+
+                    <div class="p-6 rounded-2xl bg-cardBg border border-borderSubtle card-custom-glow transition-all">
+                        <div class="w-10 h-10 rounded-xl bg-brand-500/10 border border-brand-500/20 flex items-center justify-center text-brand-500 mb-4">
+                            <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 5a1 1 0 011-1h14a1 1 0 011 1v2a1 1 0 01-1 1H5a1 1 0 01-1-1V5zM4 13a1 1 0 011-1h6a1 1 0 011 1v6a1 1 0 01-1 1H5a1 1 0 01-1-1v-6zM16 13a1 1 0 011-1h2a1 1 0 011 1v6a1 1 0 01-1 1h-2a1 1 0 01-1-1v-6z"></path></svg>
+                        </div>
+                        <h3 class="text-lg font-bold text-textPrimary mb-2">Intuitive UI/UX</h3>
+                        <p class="text-xs text-textSecondary leading-relaxed">ออกแบบหน้าตาการใช้งานที่เข้าใจง่าย พนักงานใช้งานได้ทันทีโดยไม่ต้องอบรมยาวนาน</p>
+                    </div>
+
+                    <div class="p-6 rounded-2xl bg-cardBg border border-borderSubtle card-custom-glow transition-all">
+                        <div class="w-10 h-10 rounded-xl bg-brand-500/10 border border-brand-500/20 flex items-center justify-center text-brand-500 mb-4">
+                            <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 11H5m14 0a2 2 0 012 2v6a2 2 0 01-2 2H5a2 2 0 01-2-2v-6a2 2 0 012-2m14 0V9a2 2 0 00-2-2M5 11V9a2 2 0 012-2m0 0V5a2 2 0 012-2h6a2 2 0 012 2v2M7 7h10"></path></svg>
+                        </div>
+                        <h3 class="text-lg font-bold text-textPrimary mb-2">Clean Architecture</h3>
+                        <p class="text-xs text-textSecondary leading-relaxed">โครงสร้างโค้ดตามมาตรฐาน MVC / Clean Code บำรุงรักษาและต่อยอดได้ง่าย</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Services Section (บริการทั้งหมด) -->
+        <section id="services" class="py-24 border-t border-borderSubtle bg-cardBg/20">
+            <div class="max-w-7xl mx-auto px-6">
+                <div class="text-center max-w-2xl mx-auto mb-16">
+                    <h2 class="text-xs font-bold text-brand-500 uppercase tracking-widest mb-3">Our Core Services</h2>
+                    <h3 class="text-3xl font-bold tracking-tight text-textPrimary">บริการพัฒนาซอฟต์แวร์และระบบองค์กรแบบครบวงจร</h3>
+                    <p class="text-textSecondary text-sm mt-3">ครอบคลุมตั้งแต่การออกแบบสถาปัตยกรรม เขียนโปรแกรม ทดสอบ ไปจนถึงการดูแลหลังการขาย</p>
+                </div>
+
+                <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+                    <!-- Service 1 -->
+                    <div class="bg-cardBg border border-borderSubtle p-8 rounded-2xl hover:border-brand-500/50 card-custom-glow transition-all group flex flex-col justify-between">
+                        <div>
+                            <div class="w-14 h-14 rounded-2xl bg-brand-500/10 border border-brand-500/20 flex items-center justify-center text-brand-500 mb-6 group-hover:scale-110 group-hover:bg-brand-500/20 transition-all">
+                                <svg class="w-7 h-7" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 21V5a2 2 0 00-2-2H7a2 2 0 00-2 2v16m14 0h2m-2 0h-5m-9 0H3m2 0h5M9 7h1m-1 4h1m4-4h1m-1 4h1m-5 10v-5a1 1 0 011-1h2a1 1 0 011 1v5m-4 0h4"></path></svg>
+                            </div>
+                            <h4 class="text-xl font-bold text-textPrimary mb-3 group-hover:text-brand-400 transition-colors">Enterprise Management Systems</h4>
+                            <p class="text-textSecondary text-sm leading-relaxed mb-6">
+                                ออกแบบและพัฒนาระบบบริหารจัดการภายในองค์กรเฉพาะทาง เช่น ระบบบริหารสินทรัพย์และครุภัณฑ์ (Asset Center), ระบบสต็อก/คลังสินค้า (WMS), ระบบจองทรัพยากร และระบบ HR
+                            </p>
+                        </div>
+                        <ul class="text-xs text-textSecondary space-y-2 pt-4 border-t border-borderSubtle">
+                            <li class="flex items-center gap-2">&bull; Real-time Dashboard & Summary Report</li>
+                            <li class="flex items-center gap-2">&bull; Multi-tier Approval & Workflow Automation</li>
+                            <li class="flex items-center gap-2">&bull; Role-based Permissions Management</li>
+                        </ul>
+                    </div>
+
+                    <!-- Service 2 -->
+                    <div class="bg-cardBg border border-borderSubtle p-8 rounded-2xl hover:border-brand-500/50 card-custom-glow transition-all group flex flex-col justify-between">
+                        <div>
+                            <div class="w-14 h-14 rounded-2xl bg-brand-500/10 border border-brand-500/20 flex items-center justify-center text-brand-500 mb-6 group-hover:scale-110 group-hover:bg-brand-500/20 transition-all">
+                                <svg class="w-7 h-7" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z"></path></svg>
+                            </div>
+                            <h4 class="text-xl font-bold text-textPrimary mb-3 group-hover:text-brand-400 transition-colors">AI Integration & Automation</h4>
+                            <p class="text-textSecondary text-sm leading-relaxed mb-6">
+                                ปรับใช้ปัญญาประดิษฐ์ (AI & LLMs) เข้ากับซอฟต์แวร์ธุรกิจ เช่น AI Analytics Dashboard, ระบบตอบคำถามอัจฉริยะด้วยฐานข้อมูลองค์กร (RAG Chatbot), และระบบจำแนกเอกสารอัตโนมัติ
+                            </p>
+                        </div>
+                        <ul class="text-xs text-textSecondary space-y-2 pt-4 border-t border-borderSubtle">
+                            <li class="flex items-center gap-2">&bull; Custom AI Chatbot & Knowledge Base</li>
+                            <li class="flex items-center gap-2">&bull; Predictive Data & Trend Forecasting</li>
+                            <li class="flex items-center gap-2">&bull; Smart OCR & Auto-classification</li>
+                        </ul>
+                    </div>
+
+                    <!-- Service 3 -->
+                    <div class="bg-cardBg border border-borderSubtle p-8 rounded-2xl hover:border-brand-500/50 card-custom-glow transition-all group flex flex-col justify-between">
+                        <div>
+                            <div class="w-14 h-14 rounded-2xl bg-brand-500/10 border border-brand-500/20 flex items-center justify-center text-brand-500 mb-6 group-hover:scale-110 group-hover:bg-brand-500/20 transition-all">
+                                <svg class="w-7 h-7" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 12a9 9 0 01-9 9m9-9a9 9 0 00-9-9m9 9H3m9 9a9 9 0 01-9-9m9 9c1.657 0 3-4.03 3-9s-1.343-9-3-9m0 18c-1.657 0-3-4.03-3-9s1.343-9 3-9m-9 9a9 9 0 019-9"></path></svg>
+                            </div>
+                            <h4 class="text-xl font-bold text-textPrimary mb-3 group-hover:text-brand-400 transition-colors">Full-Stack Web App & API</h4>
+                            <p class="text-textSecondary text-sm leading-relaxed mb-6">
+                                พัฒนา Web Application และ Cloud Portal ครบวงจร ตั้งแต่การออกแบบ UI/UX สถาปัตยกรรม Backend ที่ทนทาน และการเชื่อมต่อ RESTful API กับระบบภายนอก (Payment, ERP, CRM)
+                            </p>
+                        </div>
+                        <ul class="text-xs text-textSecondary space-y-2 pt-4 border-t border-borderSubtle">
+                            <li class="flex items-center gap-2">&bull; Responsive UI for Desktop & Mobile</li>
+                            <li class="flex items-center gap-2">&bull; High-speed RESTful & Webhook APIs</li>
+                            <li class="flex items-center gap-2">&bull; Scalable MySQL / PostgreSQL DB</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+
+
+        <!-- Portfolio Section (ผลงานจริงที่สามารถกดเข้าชมได้) -->
+        <section id="portfolio" class="py-24 border-t border-borderSubtle bg-cardBg/30">
+            <div class="max-w-7xl mx-auto px-6">
+                <div class="flex flex-col md:flex-row md:items-end justify-between mb-16">
+                    <div>
+                        <div class="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-brand-500/10 text-brand-500 text-xs font-semibold uppercase tracking-wider mb-3">
+                            Real-World Showcase
+                        </div>
+                        <h3 class="text-3xl sm:text-4xl font-bold tracking-tight text-textPrimary">ผลงานและระบบที่พัฒนาจริง</h3>
+                    </div>
+                    <p class="text-textSecondary text-sm mt-4 md:mt-0 max-w-md">ระบบบริหารจัดการจริงที่ถูกนำไปใช้งานเพื่อยกระดับองค์กร คลิกที่การ์ดเพื่อเข้าชมระบบตัวอย่างได้ทันที</p>
+                </div>
+
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+                    <!-- Project 1: DBTech Asset Center -->
+                    <a href="https://mvc.ac.th/dbtech-assets/" target="_blank" class="bg-cardBg border border-borderSubtle rounded-2xl overflow-hidden hover:border-brand-500/60 card-custom-glow transition-all flex flex-col group block">
+                        <div class="h-64 bg-gradient-to-br from-slate-900 via-brand-700/30 to-appBg p-8 flex flex-col justify-between relative overflow-hidden">
+                            <div class="absolute inset-0 bg-brand-500/5 opacity-0 group-hover:opacity-100 transition-opacity"></div>
+                            <div class="flex items-center justify-between z-10">
+                                <span class="inline-flex items-center px-3 py-1 rounded-full bg-brand-500/20 text-brand-400 text-xs font-semibold border border-brand-500/30">
+                                    Enterprise Asset Management
+                                </span>
+                                <div class="w-10 h-10 rounded-full bg-brand-500/20 border border-brand-500/30 flex items-center justify-center text-brand-400 group-hover:bg-brand-500 group-hover:text-white transition-all transform group-hover:translate-x-1 group-hover:-translate-y-1 shadow">
+                                    <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14"></path></svg>
+                                </div>
+                            </div>
+                            <div class="z-10">
+                                <h4 class="text-2xl font-bold text-white mb-2 group-hover:text-brand-400 transition-colors">
+                                    DBTech Asset Center
+                                </h4>
+                                <p class="text-brand-400 text-sm font-semibold tracking-wide">ระบบบริหารและติดตามสินทรัพย์อัจฉริยะ</p>
+                            </div>
+                        </div>
+                        <div class="p-8 flex-1 flex flex-col justify-between">
+                            <div>
+                                <p class="text-textSecondary text-sm mb-6 leading-relaxed">
+                                    ระบบบริหารจัดการสินทรัพย์ ครุภัณฑ์ และอุปกรณ์ภายในองค์กรแบบ Real-time รองรับการตรวจนับครุภัณฑ์ผ่านระบบบาร์โค้ด/QR Code, การจำแนกหมวดหมู่, คำนวณค่าเสื่อมราคาอัตโนมัติ และระบบรายงานสรุปผลสำหรับผู้บริหาร
+                                </p>
+                                <div class="flex flex-wrap gap-2 pt-4 border-t border-borderSubtle text-xs text-textSecondary font-medium mb-6">
+                                    <span class="px-3 py-1 rounded-lg bg-appBg border border-borderSubtle">Full-Stack Architecture</span>
+                                    <span class="px-3 py-1 rounded-lg bg-appBg border border-borderSubtle">MySQL Database</span>
+                                    <span class="px-3 py-1 rounded-lg bg-appBg border border-borderSubtle">Asset QR Generator</span>
+                                    <span class="px-3 py-1 rounded-lg bg-appBg border border-borderSubtle">Executive Dashboard</span>
+                                </div>
+                            </div>
+                            <div class="inline-flex items-center gap-2 text-sm font-semibold text-brand-500 group-hover:text-brand-400 transition-colors">
+                                <span>คลิกเพื่อเข้าชมระบบ (Live Demo)</span>
+                                <svg class="w-4 h-4 transform group-hover:translate-x-1.5 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14 5l7 7m0 0l-7 7m7-7H3"></path></svg>
+                            </div>
+                        </div>
+                    </a>
+
+                    <!-- Project 2: AI Dashboard Studio -->
+                    <a href="https://ai-dashboard.free.nf" target="_blank" class="bg-cardBg border border-borderSubtle rounded-2xl overflow-hidden hover:border-brand-500/60 card-custom-glow transition-all flex flex-col group block">
+                        <div class="h-64 bg-gradient-to-br from-slate-900 via-indigo-950/60 to-appBg p-8 flex flex-col justify-between relative overflow-hidden">
+                            <div class="absolute inset-0 bg-brand-500/5 opacity-0 group-hover:opacity-100 transition-opacity"></div>
+                            <div class="flex items-center justify-between z-10">
+                                <span class="inline-flex items-center px-3 py-1 rounded-full bg-brand-500/20 text-brand-400 text-xs font-semibold border border-brand-500/30">
+                                    AI-Powered Analytics
+                                </span>
+                                <div class="w-10 h-10 rounded-full bg-brand-500/20 border border-brand-500/30 flex items-center justify-center text-brand-400 group-hover:bg-brand-500 group-hover:text-white transition-all transform group-hover:translate-x-1 group-hover:-translate-y-1 shadow">
+                                    <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14"></path></svg>
+                                </div>
+                            </div>
+                            <div class="z-10">
+                                <h4 class="text-2xl font-bold text-white mb-2 group-hover:text-brand-400 transition-colors">
+                                    AI Dashboard Studio
+                                </h4>
+                                <p class="text-brand-400 text-sm font-semibold tracking-wide">แดชบอร์ดวิเคราะห์ข้อมูลอัจฉริยะด้วย AI</p>
+                            </div>
+                        </div>
+                        <div class="p-8 flex-1 flex flex-col justify-between">
+                            <div>
+                                <p class="text-textSecondary text-sm mb-6 leading-relaxed">
+                                    แพลตฟอร์มรวมศูนย์ข้อมูลและรายงานสถิติที่ผสานความสามารถของ AI ในการวิเคราะห์แนวโน้ม คัดกรองข้อมูลผิดปกติ (Anomaly Detection) และสรุปข้อมูลอัตโนมัติ ช่วยลดเวลาการทำสรุปรายงานของผู้บริหาร
+                                </p>
+                                <div class="flex flex-wrap gap-2 pt-4 border-t border-borderSubtle text-xs text-textSecondary font-medium mb-6">
+                                    <span class="px-3 py-1 rounded-lg bg-appBg border border-borderSubtle">Node.js & PHP Backend</span>
+                                    <span class="px-3 py-1 rounded-lg bg-appBg border border-borderSubtle">AI LLM Integration</span>
+                                    <span class="px-3 py-1 rounded-lg bg-appBg border border-borderSubtle">Automated Insights</span>
+                                    <span class="px-3 py-1 rounded-lg bg-appBg border border-borderSubtle">Interactive Charts</span>
+                                </div>
+                            </div>
+                            <div class="inline-flex items-center gap-2 text-sm font-semibold text-brand-500 group-hover:text-brand-400 transition-colors">
+                                <span>คลิกเพื่อเข้าชมระบบ (Live Demo)</span>
+                                <svg class="w-4 h-4 transform group-hover:translate-x-1.5 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14 5l7 7m0 0l-7 7m7-7H3"></path></svg>
+                            </div>
+                        </div>
+                    </a>
+                </div>
+            </div>
+        </section>
+
+        <!-- Modern Tech Stack Section -->
+        <section id="tech" class="py-20 border-t border-b border-borderSubtle bg-cardBg/20">
+            <div class="max-w-7xl mx-auto px-6 text-center">
+                <h2 class="text-xs font-bold text-brand-500 uppercase tracking-widest mb-3">Modern Technology Stack</h2>
+                <h3 class="text-2xl sm:text-3xl font-bold tracking-tight text-textPrimary mb-12">เทคโนโลยีระดับมาตรฐานสากลที่เราเลือกใช้</h3>
+                <div class="flex flex-wrap items-center justify-center gap-4 sm:gap-6 max-w-5xl mx-auto">
+                    <span class="px-5 py-3 rounded-xl bg-cardBg border border-borderSubtle text-textPrimary font-medium text-sm shadow-sm hover:border-brand-500 hover:text-brand-400 transition-all">HTML5 / Modern CSS3</span>
+                    <span class="px-5 py-3 rounded-xl bg-cardBg border border-borderSubtle text-textPrimary font-medium text-sm shadow-sm hover:border-brand-500 hover:text-brand-400 transition-all">JavaScript (ES6+) / TypeScript</span>
+                    <span class="px-5 py-3 rounded-xl bg-cardBg border border-borderSubtle text-textPrimary font-medium text-sm shadow-sm hover:border-brand-500 hover:text-brand-400 transition-all">Node.js & Express</span>
+                    <span class="px-5 py-3 rounded-xl bg-cardBg border border-borderSubtle text-textPrimary font-medium text-sm shadow-sm hover:border-brand-500 hover:text-brand-400 transition-all">PHP 8.x / Modern Frameworks</span>
+                    <span class="px-5 py-3 rounded-xl bg-cardBg border border-borderSubtle text-textPrimary font-medium text-sm shadow-sm hover:border-brand-500 hover:text-brand-400 transition-all">MySQL / MariaDB</span>
+                    <span class="px-5 py-3 rounded-xl bg-cardBg border border-borderSubtle text-textPrimary font-medium text-sm shadow-sm hover:border-brand-500 hover:text-brand-400 transition-all">PostgreSQL Database</span>
+                    <span class="px-5 py-3 rounded-xl bg-cardBg border border-borderSubtle text-textPrimary font-medium text-sm shadow-sm hover:border-brand-500 hover:text-brand-400 transition-all">Tailwind CSS & Responsive Design</span>
+                    <span class="px-5 py-3 rounded-xl bg-cardBg border border-borderSubtle text-textPrimary font-medium text-sm shadow-sm hover:border-brand-500 hover:text-brand-400 transition-all">AI APIs / OpenAI / Anthropic / Gemini</span>
+                    <span class="px-5 py-3 rounded-xl bg-cardBg border border-borderSubtle text-textPrimary font-medium text-sm shadow-sm hover:border-brand-500 hover:text-brand-400 transition-all">Docker & Cloud Deployment</span>
+                </div>
+            </div>
+        </section>
+
+        <!-- FAQ Section (คำถามที่พบบ่อย) -->
+        <section id="faq" class="py-24 max-w-4xl mx-auto px-6">
+            <div class="text-center mb-16">
+                <div class="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-brand-500/10 text-brand-500 text-xs font-semibold uppercase tracking-wider mb-3">
+                    Frequently Asked Questions
+                </div>
+                <h3 class="text-3xl font-bold tracking-tight text-textPrimary">คำถามที่พบบ่อย (FAQ)</h3>
+                <p class="text-textSecondary text-sm mt-2">ข้อสงสัยทั่วไปเกี่ยวกับการว่าจ้างพัฒนาซอฟต์แวร์กับเรา</p>
+            </div>
+
+            <div class="space-y-4">
+                <!-- FAQ 1 -->
+                <div class="rounded-2xl bg-cardBg border border-borderSubtle overflow-hidden">
+                    <button onclick="toggleFaq(1)" class="w-full px-6 py-5 text-left flex items-center justify-between gap-4 font-semibold text-textPrimary hover:text-brand-500 transition-colors">
+                        <span>1. ซอฟต์แวร์ที่พัฒนา ลูกค้าจะได้สิทธิ์ความเป็นเจ้าของ Source Code หรือไม่?</span>
+                        <svg id="faqIcon-1" class="w-5 h-5 shrink-0 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path></svg>
+                    </button>
+                    <div id="faqContent-1" class="hidden px-6 pb-5 text-sm text-textSecondary leading-relaxed border-t border-borderSubtle/60 pt-4">
+                        ลูกค้าได้รับกรรมสิทธิ์ใน Source Code และฐานข้อมูล 100% เต็มรูปแบบเมื่อส่งมอบงานเสร็จสมบูรณ์ สามารถนำไปติดตั้งบน Server ขององค์กรเอง หรือพัฒนาต่อยอดได้อย่างอิสระโดยไม่มีสัญญาผูกมัด
+                    </div>
+                </div>
+
+                <!-- FAQ 2 -->
+                <div class="rounded-2xl bg-cardBg border border-borderSubtle overflow-hidden">
+                    <button onclick="toggleFaq(2)" class="w-full px-6 py-5 text-left flex items-center justify-between gap-4 font-semibold text-textPrimary hover:text-brand-500 transition-colors">
+                        <span>2. มีการรับประกันและดูแลระบบหลังส่งมอบ (Maintenance) อย่างไร?</span>
+                        <svg id="faqIcon-2" class="w-5 h-5 shrink-0 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path></svg>
+                    </button>
+                    <div id="faqContent-2" class="hidden px-6 pb-5 text-sm text-textSecondary leading-relaxed border-t border-borderSubtle/60 pt-4">
+                        เรามีระยะเวลารับประกัน Bug / Defect ฟรีหลังส่งมอบ และมีแพ็กเกจดูแลรักษาระบบ (Maintenance & SLA Support) ทั้งการอัปเดตความปลอดภัย, สำรองข้อมูล (Backup), ปรับแต่ง Performance และดูแล Server ตลอด 24/7
+                    </div>
+                </div>
+
+                <!-- FAQ 3 -->
+                <div class="rounded-2xl bg-cardBg border border-borderSubtle overflow-hidden">
+                    <button onclick="toggleFaq(3)" class="w-full px-6 py-5 text-left flex items-center justify-between gap-4 font-semibold text-textPrimary hover:text-brand-500 transition-colors">
+                        <span>3. สามารถเชื่อมต่อระบบใหม่เข้ากับฐานข้อมูลหรือโปรแกรมเดิมที่มีอยู่แล้วได้หรือไม่?</span>
+                        <svg id="faqIcon-3" class="w-5 h-5 shrink-0 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path></svg>
+                    </button>
+                    <div id="faqContent-3" class="hidden px-6 pb-5 text-sm text-textSecondary leading-relaxed border-t border-borderSubtle/60 pt-4">
+                        สามารถทำได้ครับ ทีมงานเราเชี่ยวชาญการทำ API Integration, Database Migration และการเชื่อมต่อระหว่างระบบ (เช่น ERP, Payment Gateway, Active Directory/LDAP, หรือ Line OA) เพื่อให้ระบบทำงานประสานกันอย่างไร้รอยต่อ
+                    </div>
+                </div>
+
+                <!-- FAQ 4 -->
+                <div class="rounded-2xl bg-cardBg border border-borderSubtle overflow-hidden">
+                    <button onclick="toggleFaq(4)" class="w-full px-6 py-5 text-left flex items-center justify-between gap-4 font-semibold text-textPrimary hover:text-brand-500 transition-colors">
+                        <span>4. ระยะเวลาและขั้นตอนการประเมินราคาโปรเจกต์เป็นอย่างไร?</span>
+                        <svg id="faqIcon-4" class="w-5 h-5 shrink-0 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path></svg>
+                    </button>
+                    <div id="faqContent-4" class="hidden px-6 pb-5 text-sm text-textSecondary leading-relaxed border-t border-borderSubtle/60 pt-4">
+                        หลังจากได้รับรายละเอียดความต้องการ (Requirement) ทีมงานจะทำการวิเคราะห์และออกใบเสนอราคา (Quotation) พร้อมเอกสาร Scope of Work (SOW) ภายใน 1-3 วันทำการ โดยไม่มีค่าใช้จ่ายในการปรึกษาเบื้องต้น
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Contact Section -->
+        <section id="contact" class="py-24 border-t border-borderSubtle bg-gradient-to-b from-appBg to-cardBg/60">
+            <div class="max-w-4xl mx-auto px-6">
+                <div class="text-center max-w-2xl mx-auto mb-14">
+                    <div class="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-brand-500/10 text-brand-500 text-xs font-semibold uppercase tracking-wider mb-3">
+                        Get In Touch
+                    </div>
+                    <h3 class="text-3xl sm:text-4xl font-bold tracking-tight text-textPrimary mb-4">พร้อมเริ่มต้นยกระดับธุรกิจของคุณแล้วหรือยัง?</h3>
+                    <p class="text-textSecondary text-sm sm:text-base">
+                        พูดคุย ปรึกษาไอเดียระบบ หรือติดต่อสอบถามรายละเอียดโปรเจกต์กับเราได้โดยตรงผ่านช่องทางด้านล่าง
+                    </p>
+                </div>
+
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-6 max-w-3xl mx-auto">
+                    <!-- Email Card -->
+                    <a href="mailto:thitisak.dev@gmail.com" class="p-8 rounded-2xl bg-cardBg border border-borderSubtle hover:border-brand-500 card-custom-glow transition-all flex flex-col justify-between group block">
+                        <div>
+                            <div class="w-14 h-14 rounded-2xl bg-brand-500/10 border border-brand-500/20 flex items-center justify-center text-brand-500 mb-6 group-hover:scale-110 transition-transform">
+                                <svg class="w-7 h-7" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"></path></svg>
+                            </div>
+                            <span class="text-xs text-textSecondary uppercase font-bold tracking-wider block mb-1">Direct Email</span>
+                            <h4 class="text-lg font-bold text-textPrimary group-hover:text-brand-400 transition-colors mb-2">อีเมลติดต่อ</h4>
+                            <p class="text-sm text-textSecondary mb-6">ส่งรายละเอียด Requirement หรือเอกสาร TOR เพื่อขอใบเสนอราคา</p>
+                        </div>
+                        <div class="pt-4 border-t border-borderSubtle flex items-center justify-between text-sm font-semibold text-brand-500 group-hover:text-brand-400">
+                            <span>thitisak.dev@gmail.com</span>
+                            <svg class="w-4 h-4 transform group-hover:translate-x-1.5 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14 5l7 7m0 0l-7 7m7-7H3"></path></svg>
+                        </div>
+                    </a>
+
+                    <!-- Line OA Card -->
+                    <a href="https://line.me/ti/p/~@991erykx" target="_blank" rel="noopener noreferrer" class="p-8 rounded-2xl bg-cardBg border border-borderSubtle hover:border-emerald-500 card-custom-glow transition-all flex flex-col justify-between group block">
+                        <div>
+                            <div class="w-14 h-14 rounded-2xl bg-emerald-500/10 border border-emerald-500/20 flex items-center justify-center text-emerald-500 mb-6 group-hover:scale-110 transition-transform">
+                                <svg class="w-7 h-7" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 12h.01M12 12h.01M16 12h.01M21 12c0 4.418-4.03 8-9 8a9.863 9.863 0 01-4.255-.949L3 20l1.395-3.72C3.512 15.042 3 13.574 3 12c0-4.418 4.03-8 9-8s9 3.582 9 8z"></path></svg>
+                            </div>
+                            <span class="text-xs text-emerald-500 uppercase font-bold tracking-wider block mb-1">Instant Chat</span>
+                            <h4 class="text-lg font-bold text-textPrimary group-hover:text-emerald-400 transition-colors mb-2">Line Official</h4>
+                            <p class="text-sm text-textSecondary mb-6">ปรึกษาและพูดคุยกับทีมงานได้สะดวกรวดเร็ว ตอบกลับไว</p>
+                        </div>
+                        <div class="pt-4 border-t border-borderSubtle flex items-center justify-between text-sm font-semibold text-emerald-500 group-hover:text-emerald-400">
+                            <span>@991erykx</span>
+                            <svg class="w-4 h-4 transform group-hover:translate-x-1.5 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14 5l7 7m0 0l-7 7m7-7H3"></path></svg>
+                        </div>
+                    </a>
+                </div>
+
+                <div class="mt-8 max-w-3xl mx-auto p-5 rounded-2xl bg-cardBg border border-borderSubtle text-xs text-textSecondary flex flex-col sm:flex-row items-center justify-between gap-4 text-center sm:text-left">
+                    <div class="flex items-center gap-3">
+                        <span class="w-3 h-3 rounded-full bg-emerald-500 animate-pulse shrink-0"></span>
+                        <span class="text-textPrimary font-semibold">Fast Response Service:</span>
+                        <span>ทีมงานพร้อมตอบกลับและนัดประชุมออนไลน์เพื่อสรุป Requirement ภายใน 24 ชั่วโมง</span>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <!-- Footer -->
+    <footer class="py-12 border-t border-borderSubtle bg-appBg text-textSecondary text-xs">
+        <div class="max-w-7xl mx-auto px-6">
+            <div class="flex flex-col md:flex-row items-center justify-between gap-6 pb-8 border-b border-borderSubtle">
+                <!-- Logo & Tagline -->
+                <div class="flex items-center gap-3">
+                    <div class="w-8 h-8 rounded-lg bg-gradient-to-tr from-brand-500 to-brand-600 p-1 flex items-center justify-center">
+                        <img src="img/logo3.png" alt="Logo" class="h-full w-full object-contain">
+                    </div>
+                    <div>
+                        <span class="font-bold text-textPrimary text-sm">Mak Craft Studio</span>
+                        <p class="text-[11px] text-textSecondary">Enterprise Software & AI Integration Architecture</p>
+                    </div>
+                </div>
+
+                <!-- Footer Quick Links -->
+                <div class="flex flex-wrap justify-center gap-6 text-xs">
+                    <a href="#about" class="hover:text-brand-500 transition-colors">เกี่ยวกับเรา</a>
+                    <a href="#services" class="hover:text-brand-500 transition-colors">บริการ</a>
+                    <a href="#portfolio" class="hover:text-brand-500 transition-colors">ผลงาน</a>
+                    <a href="#tech" class="hover:text-brand-500 transition-colors">เทคโนโลยี</a>
+                    <a href="#contact" class="hover:text-brand-500 transition-colors">ติดต่อเรา</a>
+                </div>
+            </div>
+
+            <div class="pt-8 flex flex-col sm:flex-row items-center justify-between gap-4 text-center sm:text-left">
+                <p>&copy; 2026 Mak Craft Studio. All rights reserved. Enterprise Software Solutions.</p>
+                <p class="text-textSecondary/70">Designed for Performance, Security & Scalability.</p>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Interactive Scripts for Theme Switching & UI -->
+    <script>
+        // Theme Engine
+        function setTheme(themeName) {
+            document.documentElement.setAttribute('data-theme', themeName);
+            localStorage.setItem('mcs_theme', themeName);
+        }
+
+        function toggleMode() {
+            const currentMode = document.documentElement.getAttribute('data-mode') || 'dark';
+            const newMode = currentMode === 'dark' ? 'light' : 'dark';
+            document.documentElement.setAttribute('data-mode', newMode);
+            localStorage.setItem('mcs_mode', newMode);
+            updateModeIcons(newMode);
+        }
+
+        function updateModeIcons(mode) {
+            const sunIcon = document.getElementById('sunIcon');
+            const moonIcon = document.getElementById('moonIcon');
+            if (mode === 'dark') {
+                sunIcon.classList.remove('hidden');
+                moonIcon.classList.add('hidden');
+            } else {
+                sunIcon.classList.add('hidden');
+                moonIcon.classList.remove('hidden');
+            }
+        }
+
+        // Load saved theme on boot
+        (function initTheme() {
+            const savedTheme = localStorage.getItem('mcs_theme') || 'cyan';
+            const savedMode = localStorage.getItem('mcs_mode') || 'dark';
+            document.documentElement.setAttribute('data-theme', savedTheme);
+            document.documentElement.setAttribute('data-mode', savedMode);
+            updateModeIcons(savedMode);
+        })();
+
+        // Mobile Menu Toggle
+        function toggleMobileMenu() {
+            const menu = document.getElementById('mobileMenu');
+            menu.classList.toggle('hidden');
+        }
+
+        // FAQ Accordion
+        function toggleFaq(id) {
+            const content = document.getElementById('faqContent-' + id);
+            const icon = document.getElementById('faqIcon-' + id);
+            if (content.classList.contains('hidden')) {
+                content.classList.remove('hidden');
+                icon.classList.add('rotate-180');
+            } else {
+                content.classList.add('hidden');
+                icon.classList.remove('rotate-180');
+            }
+        }
+    </script>
+</body>
+</html>
